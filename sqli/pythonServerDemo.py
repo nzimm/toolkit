@@ -22,7 +22,7 @@ def server(port):
         print("Server could not bind, port still in use\n{}".format(error))
 
 def browse(port):
-    webbrowser.open_new('http://127.0.0.1:' + port + '/homepage.html')
+    webbrowser.open_new('http://127.0.0.1:' + port + '/index.html')
     server(int(port))
 
 if __name__ == "__main__":

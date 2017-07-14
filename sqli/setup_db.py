@@ -6,16 +6,16 @@ import sqlite3 as db
 # This script creates or refreshes a database to demonstrate SQL injection attacks
 ####################################################################################
 
-DB_NAME = "sample.db"
+DB_NAME = "database.db"
 
 try:
-    os.remove(os.path.join(sys.path[0], "sample.db"))
-    print("Reseting test database...")
+    os.remove(os.path.join(sys.path[0], DB_NAME))
+    print("Reseting {}...".format(DB_NAME))
 except FileNotFoundError:
-    print("Initializing test database...")
+    print("Initializing {}...".format(DB_NAME))
 
 # Connect to database
-connection = db.connect("sample.db")
+connection = db.connect(DB_NAME)
 
 # Create cursor object
 cursor = connection.cursor()
