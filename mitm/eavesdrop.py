@@ -9,8 +9,9 @@ def sniff(time):
     result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',
                              '-q', '-a', 'duration:'+time], stdout=subprocess.PIPE)
     for data in result.stdout.decode().split('\n'):
-        if unhexlify(data).decode() != '':
-            print("[SNIFFED DATA] {}".format(unhexlify(data).decode()))
+        clean_data = unhexlify(data).decode()
+        if clean_data != '':
+            print("[SNIFFED DATA] {}".format(clean_data))
 
 def main():
     while True:
