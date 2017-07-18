@@ -24,13 +24,13 @@ def run_client(targetHost, targetPort):
     # Create socket object
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
     
-        # Set timeout
-        client.settimeout(10)
-    
         # Create connection
         client.connect((targetHost, targetPort))
         print("[*] Connection with {}:{}\n".format(targetHost, targetPort))
-
+    
+        # Set timeout
+        # TODO: Figure out why client doesn't timeout - while loop resets counter?
+        client.settimeout(1)
     
         # Handshake successful
         print("Send .quit or .exit to quit")
@@ -39,7 +39,7 @@ def run_client(targetHost, targetPort):
             client.send(bytes(message, 'utf-8'))
     
             # Check message against known commands
-            if message in (".quit", ".exit"): break
+            if message in (".quit", ".exit", "quit", "exit"): break
     
         # Gracefully exit 
         client.close()

@@ -28,7 +28,7 @@ def run_server(bind_ip, bind_port):
         print("[*] Listening on {}:{}".format(bind_ip, bind_port))
     
         # Set timeout
-        server.settimeout(10)
+        server.settimeout(30)
     
         # Make connection with client
         client, address = server.accept()
@@ -36,7 +36,7 @@ def run_server(bind_ip, bind_port):
     
         while True:
             request = client.recv(1024).decode('utf-8')
-            if request in (".quit", ".exit"): break
+            if request in (".quit", ".exit", "quit", "exit"): break
             # Check for exit command
             print("[RECEIVED] {}".format(request))
     
