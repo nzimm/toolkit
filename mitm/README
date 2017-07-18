@@ -1,0 +1,16 @@
+Program to illustrate packet sniffing, and demonstrate the application of encryption
+
+[*] Summary
+    
+    server.py and client.py have default ip/port values which sync up. To 
+
+[*] Usage
+    
+    1) Load up 3 different terminal windows
+    2) Run server.py in the first terminal
+    3) Run client.py in the second terminal
+    3) Run eavesdrop.py in the third terminal
+    5) Follow eavesdrop.py prompts to begin sniffing traffic
+    6) Enter messages into client.py, and send them to the connected host (server.py)
+    7) Watch the eavesdrop.py window decode the traffic and print out the sniffed packet data
+
