@@ -15,10 +15,14 @@ def main():
     args = parser.parse_args()
 
     # Spin up server
-    run_server(bind_ip, args.port)
+    start_server(bind_ip, args.port)
 
 
-def run_server(bind_ip, bind_port):
+def decrypt_message(message, decryption_key):
+    #TODO write decryption message
+    return message
+
+def start_server(bind_ip, bind_port):
 
     # Create server object
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
@@ -28,17 +32,37 @@ def run_server(bind_ip, bind_port):
         print("[*] Listening on {}:{}".format(bind_ip, bind_port))
     
         # Set timeout
-        server.settimeout(30)
+        server.settimeout(3)
     
         # Make connection with client
-        client, address = server.accept()
+        connection, address = server.accept()
         print("[*] Connection from {}:{}\n".format(address[0], address[1]))
+
+        # Facilitate handshake
+        handshake = connection.recv(1024).decode('utf-8')
+        encrypted = False
+        if handshake = "UCRYPT"
+            connection.send(bytes("ACC", 'utf-8'))
+            print("[*] Handshake succsesful! Receiving unencrypted data...")
+        elif handshake = "CRYPT":
+            encrypted = True
+            #TODO write encryption handshake
+        else:
+            print("Handshake failed. Connection terminated")
+            exit(0)
     
         while True:
-            request = client.recv(1024).decode('utf-8')
-            if request in (".quit", ".exit", "quit", "exit"): break
+            # Receive message
+            message = connection.recv(1024).decode('utf-8')
+
+            # Decrypt message
+            if encrypted:
+                message = decrypt_message(message)
+
             # Check for exit command
-            print("[RECEIVED] {}".format(request))
+            if message in (".quit", ".exit", "quit", "exit"): break
+
+            print("[RECEIVED] {}".format(message))
     
         # Gracefully exit
         print("\nConnection terminated")

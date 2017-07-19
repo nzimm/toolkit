@@ -6,6 +6,7 @@ from binascii import unhexlify
 def sniff(time):
     """ Call tshark (CLI for Wireshark) to sniff packets on loopback """
 
+    print("\nInitiating Wireshark")
     result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',
                              '-q', '-a', 'duration:'+time], stdout=subprocess.PIPE)
     for data in result.stdout.decode().split('\n'):
@@ -13,37 +14,55 @@ def sniff(time):
         if clean_data != '':
             print("[SNIFFED DATA] {}".format(clean_data))
 
-def main():
-    while True:
-        user_input = input("\nSniff packets? (help for options) ").lower()
+def menu():
+    """ Print menu option """
+    print("\n===== Packet Sniffer =====")
+    print("[1] Begin capturing packet data (15 seconds)")
+    print("[2] Specify capture length")
+    print("[3] Display sniffer information")
+    print("[4] Quit")
 
-        # Print help message
-        if user_input in ('h', 'help'):
-            print('\nSniffer demonstration application. Using wireshark, message data is')
-            print('passively picked up and displayed.\n')
-            print('yes:   sniff packets from loopback (localhost)')
-            print('no:    quit program')
-            print('help:  display this help message\n')
-        
-        # Ask user for length of time to sniff packets
-        elif user_input in ('y', 'yes'):
+
+def main():
+    # Main menue loop
+    while True:
+        menu()
+        user_input = input().lower()
+
+        # Sniff for 15 seconds
+        if user_input == "1":
+            sniff("15")
+
+        # Poll user for time
+        elif user_input == "2":
             while True:
-                time = input("Sniff packets for how many seconds? ")
+                time = input("\nHow many seconds would you like to sniff for? ")
                 try:
-                    if int(time) > 0:
+                    if int(time) >= 0:
                         pass
                 except ValueError as err:
                     print("{}: Please enter a valid number".format(err))
                 sniff(time)
                 break
-
+             
+        # Print help message
+        elif user_input == "3":
+            print('\nPasive eavsdroping demo. Using the Wireshark command line interface,')
+            print('message data is captured, decoded and displayed. Packets contain')
+            print('control information which is not displayed for simplicity.\n')
+            print('This application serves to demonstrate the feasibility of passive')
+            print('eavsdropping, and the importance of encryption. The defualt interface')
+            print('being tapped is the loopback, as the defualt client/server connection')
+            print('is over 127.0.0.1')
+        
         # Gracefully exit
-        elif user_input in ('no', 'n', 'exit', 'quit'):
+        elif user_input in ("4", "exit", "quit"):
+            print("Terminating...")
             exit(0)
 
         # Handle non-standard input
         else:
-            print("{} is not a valid input. Enter 'help' for options".format(user_input))
+            print("{} is not a valid input. Please consult menu for options".format(user_input))
             
 if __name__ == '__main__':
     main()
