@@ -5,6 +5,7 @@ from binascii import unhexlify
     
 def sniff(time):
     """ Call tshark (CLI for Wireshark) to sniff packets on loopback """
+    #TODO replase [SNIFFED DATA] with [CLIENT->SERVER] or visa versa (handshake)
 
     print("\nInitiating Wireshark")
     result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',

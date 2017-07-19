@@ -36,15 +36,15 @@ def start_server(bind_ip, bind_port):
     
         # Make connection with client
         connection, address = server.accept()
-        print("[*] Connection from {}:{}\n".format(address[0], address[1]))
+        print("[*] Connection from {}:{}".format(address[0], address[1]))
 
         # Facilitate handshake
         handshake = connection.recv(1024).decode('utf-8')
         encrypted = False
-        if handshake = "UCRYPT"
+        if handshake == "UCRYPT":
             connection.send(bytes("ACC", 'utf-8'))
-            print("[*] Handshake succsesful! Receiving unencrypted data...")
-        elif handshake = "CRYPT":
+            print("[*] Handshake succsesful!\n")
+        elif handshake == "CRYPT":
             encrypted = True
             #TODO write encryption handshake
         else:
@@ -60,7 +60,7 @@ def start_server(bind_ip, bind_port):
                 message = decrypt_message(message)
 
             # Check for exit command
-            if message in (".quit", ".exit", "quit", "exit"): break
+            if message in (".quit", ".q"): break
 
             print("[RECEIVED] {}".format(message))
     

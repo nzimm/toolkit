@@ -32,7 +32,7 @@ def start_client(targetHost, targetPort, encrypt):
     
         # Create connection
         client.connect((targetHost, targetPort))
-        print("[*] Connection with {}:{}\n".format(targetHost, targetPort))
+        print("[*] Connection with {}:{}".format(targetHost, targetPort))
     
         # Set timeout
         # NOTE: Figure out why client doesn't timeout - while loop resets counter?
@@ -46,11 +46,11 @@ def start_client(targetHost, targetPort, encrypt):
             # Unencrypted handshake
             client.send(bytes("UCRYPT", 'utf-8'))
             if client.recv(3).decode('utf-8') == "ACC":
-                print("[*] Handshake successful!\n---WARNING--- connection unencrypted")
+                print("[*] Handshake successful!")
 
     
         # On succsesful handshake successful
-        print("Send .quit or .exit to quit")
+        print("[*] '.quit' to terminate connection\n")
         while True:
             # Prompt user for input
             message = input("[SEND] ")
@@ -63,7 +63,7 @@ def start_client(targetHost, targetPort, encrypt):
             client.send(bytes(message, 'utf-8'))
     
             # Check message against known commands
-            if message in (".quit", ".exit", "quit", "exit"): break
+            if message in (".quit", ".q"): break
     
         # Gracefully exit 
         client.close()
