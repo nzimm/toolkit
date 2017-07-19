@@ -1,8 +1,15 @@
-Program to illustrate packet sniffing, and demonstrate the application of encryption
+Program to demonstrate eavsdropping and encryption
 
 [*] Summary
     
-    server.py and client.py have default ip/port values which sync up. To 
+    Simple tcp client-server architecture. Out of simplicity, the communication
+    is one way: the client sends user-input to the server, which displays
+    messages to the screen.
+
+    By default, the connection is unencrypted. By specifying the -e flag when
+    executing the client script, the client and server work out the encryption
+    in the handshake, and thereafter all transfered data is encrypted.
+
 
 [*] Usage
     
