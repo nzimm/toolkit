@@ -2,6 +2,7 @@
 import socket
 import threading
 import argparse
+from crypto import simple_decrypt
 
 def main():
     # Default values
@@ -18,9 +19,8 @@ def main():
     start_server(bind_ip, args.port)
 
 
-def decrypt_message(message, decryption_key):
-    #TODO write decryption message
-    return message
+def decrypt_message(message, key):
+    return simple_decrypt(message, key)
 
 def start_server(bind_ip, bind_port):
 
@@ -32,21 +32,23 @@ def start_server(bind_ip, bind_port):
         print("[*] Listening on {}:{}".format(bind_ip, bind_port))
     
         # Set timeout
-        server.settimeout(3)
+        server.settimeout(10)
     
         # Make connection with client
         connection, address = server.accept()
         print("[*] Connection from {}:{}".format(address[0], address[1]))
 
         # Facilitate handshake
-        handshake = connection.recv(1024).decode('utf-8')
+        handshake = connection.recv(8).decode('utf-8')
         encrypted = False
         if handshake == "UCRYPT":
-            connection.send(bytes("ACC", 'utf-8'))
+            connection.send(bytes("UACC", 'utf-8'))
             print("[*] Handshake succsesful!\n")
         elif handshake == "CRYPT":
-            encrypted = True
             #TODO write encryption handshake
+            connection.send(bytes("ACC", 'utf-8'))
+            encrypted = True
+            decryption_key = "Test Key"
         else:
             print("Handshake failed. Connection terminated")
             exit(0)
@@ -57,7 +59,7 @@ def start_server(bind_ip, bind_port):
 
             # Decrypt message
             if encrypted:
-                message = decrypt_message(message)
+                message = decrypt_message(message, decryption_key)
 
             # Check for exit command
             if message in (".quit", ".q"): break

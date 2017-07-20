@@ -14,6 +14,14 @@ def sniff(time):
         clean_data = unhexlify(data).decode()
         if clean_data != '':
             print("[SNIFFED DATA] {}".format(clean_data))
+#    result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',
+#                             '-e', 'tcp.port', '-e', 'ip.src_addr', '-q', '-a',
+#                             'duration:'+time], stdout=subprocess.PIPE)
+#    for line in result.stdout.decode().split('\n'):
+#        for data in line.split('\t'):
+#            clean_data = unhexlify(data).decode()
+#            if clean_data != '':
+#                print("[SNIFFED DATA] {}".format(clean_data))
 
 def menu():
     """ Print menu option """

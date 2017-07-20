@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import socket
 import argparse
+from crypto import simple_encrypt
+
 
 def main():
     # Variables
@@ -13,16 +15,15 @@ def main():
                         help="Target IPv4 host address (default {})".format(targetHost))
     parser.add_argument("--port", type=int, default=targetPort,
                         help="Port to connect to host on (default {})".format(targetPort))
-    parser.add_argument("-e", "--encrypt", action='store_true')
+    parser.add_argument("-e", "--encrypt", action='store_true', help="Encrypt connection to host")
     args = parser.parse_args()
 
     # Spin up client
     start_client(args.host, args.port, args.encrypt)
 
 
-def encrypt_message(message, encryption_key):
-    #TODO write encryption message
-    return message
+def encrypt_message(message, key):
+    return simple_encrypt(message, key)
 
 
 def start_client(targetHost, targetPort, encrypt):
@@ -41,12 +42,20 @@ def start_client(targetHost, targetPort, encrypt):
         # Facilitate handshake
         if encrypt:
             #TODO write encryption handshake
-            encryption_key = ""
+            client.send(bytes("CRYPT", 'utf-8'))
+            if client.recv(4).decode('utf-8') == "ACC":
+                encryption_key = "Test Key"
+                print("[*] Handshake successful!")
+            else:
+                print("[*] Handshake failed!\nConnection terminated")
+                exit(0)
         else:
             # Unencrypted handshake
             client.send(bytes("UCRYPT", 'utf-8'))
-            if client.recv(3).decode('utf-8') == "ACC":
+            if client.recv(4).decode('utf-8') == "UACC":
                 print("[*] Handshake successful!")
+            else:
+                print("[*] Handshake failed!\nConnection terminated")
 
     
         # On succsesful handshake successful
@@ -55,12 +64,13 @@ def start_client(targetHost, targetPort, encrypt):
             # Prompt user for input
             message = input("[SEND] ")
 
-            # Encrypt message
+            # Send encrypted message
             if encrypt:
-                message = encrypt_message(message, encryption_key)
-
+                client.send(bytes(encrypt_message(message, encryption_key), 'utf-8'))
+            
             # Send message
-            client.send(bytes(message, 'utf-8'))
+            else:
+                client.send(bytes(message, 'utf-8'))
     
             # Check message against known commands
             if message in (".quit", ".q"): break
