@@ -2,7 +2,7 @@
 import argparse
 from string import printable
 
-def simple_encrypt(message, key):
+def symmetric_encrypt(message, key):
     """ Uses key values to shift the characters in message
 
         Input: key <printable string> 
@@ -29,7 +29,7 @@ def simple_encrypt(message, key):
 
     return encrypted_message
 
-def simple_decrypt(message, key):
+def symmetric_decrypt(message, key):
     """ Uses key values to unshift the characters in the encrypted message
         and return the original plaintext
 
@@ -63,10 +63,10 @@ def main():
     args = parser.parse_args()
 
     if not args.decrypt:
-        encrypted = simple_encrypt(args.message, args.key)
-        print("Encrypted message: {}\nDecrypted message: {}".format(encrypted, simple_decrypt(encrypted, args.key)))
+        encrypted = symmetric_encrypt(args.message, args.key)
+        print("Encrypted message: {}\nDecrypted message: {}".format(encrypted, symmetric_decrypt(encrypted, args.key)))
     else:
-        simple_decrypt(args.message, args.key)
+        symmetric_decrypt(args.message, args.key)
 
 if __name__ == '__main__':
     main()

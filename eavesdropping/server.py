@@ -2,7 +2,7 @@
 import socket
 import threading
 import argparse
-from crypto import simple_decrypt
+from crypto import symmetric_decrypt
 
 def main():
     # Default values
@@ -20,7 +20,7 @@ def main():
 
 
 def decrypt_message(message, key):
-    return simple_decrypt(message, key)
+    return symmetric_decrypt(message, key)
 
 def start_server(bind_ip, bind_port):
 

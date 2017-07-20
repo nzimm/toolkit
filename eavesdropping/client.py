@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import socket
 import argparse
-from crypto import simple_encrypt
+from crypto import symmetric_encrypt
 
 
 def main():
@@ -23,7 +23,7 @@ def main():
 
 
 def encrypt_message(message, key):
-    return simple_encrypt(message, key)
+    return symmetric_encrypt(message, key)
 
 
 def start_client(targetHost, targetPort, encrypt):
