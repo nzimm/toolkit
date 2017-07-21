@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!--meta content="text/html;charset=utf-8" http-equiv="Content-Type"-->
     <title>SQL injection demo</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="public/js/script.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        $("#serveQuery").click(function(evnt){
+          $.ajax({
+            type: "GET",
+            url: "/database",
+            data: {"selectTerm": $("#query").val()}
+          })
+          .done(function(data) {
+            console.log(data);
+            $("#result").text(data);
+          });
+        evnt.preventDefualt();
+        });
+      });
+    </script>
   </head>
   <body>
     <h1>SQLite3 landing page</h1>
-    <form action="#">
-      Query:<br>
-      <input type="text" name="query" id="query">
-      <input type="button" id="serveQuery" value="Resolve query">
-    </form>
+    Query:<br>
+    <input type="text" name="query" id="query">
+    <button id="serveQuery">lue="Search"</button>
     <p>Query results:</p>
-    <p id="results">Submit a query to see results</p>
+    <p id="result">Submit a query to see results</p>
   </body>
 </html>
