@@ -2,11 +2,12 @@
 <html>
   <head>
     <title>SQL injection demo</title>
+    <link href="/static/css/style.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function(){
 
-        $("#serveQuery").click(function(evnt){
+        $("#search").click(function(evnt){
           $.ajax({
             type: "GET",
             url: "/database",
@@ -16,17 +17,48 @@
             console.log(data);
             $("#result").text(data);
           });
-        evnt.preventDefualt();
+          $("#results_container").show();
+          evnt.preventDefualt();
         });
+
+        $("#clear_results").click(function(evnt){
+          $("#results_container").hide();
+          evnt.preventDefualt();
+        });
+
+        $("#show_help_button").click(function(evnt){
+          $("#help_contents").show();
+          evnt.preventDefualt();
+        });
+        
+        $("#hide_help_button").click(function(evnt){
+          $("#help_contents").hide();
+          evnt.preventDefualt();
+        });
+
       });
     </script>
   </head>
   <body>
-    <h1>SQLite3 landing page</h1>
-    Query:<br>
-    <input type="text" name="query" id="query">
-    <button id="serveQuery">lue="Search"</button>
-    <p>Query results:</p>
-    <p id="result">Submit a query to see results</p>
+    <h1>Username lookup</h1>
+    <div id="container">
+      <div id="left">
+        Username lookup by first name<br>
+        <input type="text" name="query" id="query">
+        <button id="search">Search</button>
+        <div id="results_container">
+          <p>Search results:</p>
+          <p id="result"></p>
+          <button id="clear_results">Clear</button>
+        </div>
+      </div>
+      <div id="right">
+        <button id="show_help_button">Show help</button>
+        <div id="help_contents">
+          <p></p>
+          <button id="hide_help_button">Hide help</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
