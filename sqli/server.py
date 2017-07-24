@@ -28,15 +28,30 @@ class DatabaseHandler(object):
             # Separate into multiple commands
             for query in queryString.split(';'):
 
-                # Execute query
-                responce = connection.execute(query)
-                for row in responce.fetchall():
-                    for field in row:
-                        display_string += "{} ".format(field)
-                    display_string += '<br>'
+                try:
+                    # Attempt to execute sqlite3 query
+                    responce = connection.execute(query)
 
-            # Display error message
-            if display_string == "": return "No results found"
+                    # Create label for result table
+                    display_string += "<span id=\"table_query\">{}</span><br><table>".format(query)
+
+                    # Format output into HTML tables
+                    for row in responce.fetchall():
+                        display_string += "<tr>"
+                        for field in row:
+                            display_string += "<td>{}</td>".format(field)
+                        display_string += '</tr>'
+                    display_string += '</table><br>'
+
+                # Handle improper query strings
+                except sqlite3.OperationalError as err:
+                    print(err)
+                    return "Input error"
+
+            # Report unfound results to user
+            if display_string.replace("<table>","").replace("</table>","") == "":
+                return "No results found"
+
             return display_string
 
 
@@ -84,3 +99,4 @@ if __name__ == '__main__':
     webapp = InjectionDemo()
     webapp.database = DatabaseHandler()
     cherrypy.quickstart(webapp, '/', conf)
+

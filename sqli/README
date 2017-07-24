@@ -1,8 +1,7 @@
-Basic website to demonstrate the SQL injection attack vector
+Basic website to demonstrate SQL injections
 
 ---INTRUCTIONS---
-  1. Run setup_db.py to generate a sample database
-  2. Run demo.py to spin up the localhost server
-
-Feel free to inject SQL instructions at your leasure
-Repeate step 1 to reset database to default
+  1. Run server.py to generate a database and spin up a cherrypy server
+  2. Browse to localhost:8080 to view the website
+  3. Any SQLite3 commands can be injected: to regenerate the database, simply
+     restart the server

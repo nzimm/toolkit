@@ -26,6 +26,16 @@ h1 {
         font-variant-numeric: normal;
         font-variant-position: normal;
 }
+#table_query {
+    font-weight: bold;
+}
+table, th, td {
+    border: 1px solid black;
+}
+code {
+    background: dimGrey;
+    color: white;
+}
 #container {
     width: 100%;
     height: 100%;

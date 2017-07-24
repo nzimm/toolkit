@@ -14,8 +14,7 @@
             data: {"selectTerm": $("#query").val()}
           })
           .done(function(data) {
-            console.log(data);
-            $("#result").text(data);
+            $("#result").html(data);
           });
           $("#results_container").show();
           evnt.preventDefualt();
@@ -55,7 +54,15 @@
       <div id="right">
         <button id="show_help_button">Show help</button>
         <div id="help_contents">
-          <p></p>
+          <p id="help_text">
+            If you do not understand SQL injection, feel free to conduct additional
+            <a href="https://en.wikipedia.org/wiki/SQL_injection">research</a>.<br><br>
+            SQL query: <code>"SELECT username FROM users WHERE firstname='" + SearchInput + "';"</code><br>
+            Compare the output of a regular input like <code>John</code> with the output of a
+            SQL injected command like <code>' OR 1='1</code>.<br><br>
+            <span style="font-weight: bold;">Hint:</span> More advanced SQL injection commands
+            may use comments, which can be written as <code>--</code>.<br>
+          </p>
           <button id="hide_help_button">Hide help</button>
         </div>
       </div>
