@@ -76,8 +76,12 @@ class MainWidget(QWidget):
         self.sqli_layout.addWidget(self.sqli_button)
 
         # Eavesdropping layout/buttons
-        self.eavesdropping_layout = QHBoxLayout()
+        self.eavesdropping_header_layout = QHBoxLayout()
         self.eavesdropping_label = QLabel("Eavesdropping")
+        self.encryptFlag = QCheckBox("Encrypt")
+        self.eavesdropping_header_layout.addWidget(self.eavesdropping_label)
+        self.eavesdropping_header_layout.addWidget(self.encryptFlag)
+        self.eavesdropping_layout = QHBoxLayout()
         self.eavesdropping_info_button = QPushButton("Info")
         self.eavesdropping_info_button.clicked.connect(self.eavesdropping_info)
         self.eavesdropping_button = QPushButton("Launch demo")
@@ -114,7 +118,7 @@ class MainWidget(QWidget):
         self.mainLayout.addWidget(self.sqli_label)
         self.mainLayout.addLayout(self.sqli_layout)
         self.mainLayout.addWidget(self.horizontal_line1)
-        self.mainLayout.addWidget(self.eavesdropping_label)
+        self.mainLayout.addLayout(self.eavesdropping_header_layout)
         self.mainLayout.addLayout(self.eavesdropping_layout)
         self.mainLayout.addWidget(self.horizontal_line2)
         self.mainLayout.addWidget(self.steganography_label)
@@ -130,14 +134,16 @@ class MainWidget(QWidget):
                           "when a programmer concatenates a query with user-controlled input. This gives "
                           "the user full control of the sql query. This issue can be resolved by using SQL "
                           "parameters. User input is then read in as a single field, rather than a string of "
-                          "code.\n\nExample query:\n \"SELECT username FROM users WHERE firstname=\" + get_user_info + \";"
+                          "code.\n\nExample query:\n\"SELECT username FROM users WHERE firstname=\" + get_user_info + \";"
                           "\nIf the user entered a string similar to `john OR 1=1;` the WHERE clause would evaluate to "
                           "true, and the query would SELECT every username.")
         self.info.exec()
+
     def launchSQLi(self):
-        os.system(os.path.join(sys.path[0], "sqli", "server.py"))
-        time.sleep(2)
-        webbrowser.open_new('localhost:8080')
+        self.serverThread = Thread(os.path.join(sys.path[0], "sqli", "server.py"))
+        self.serverThread.start()
+        time.sleep(1)
+        webbrowser.open_new('http://127.0.0.1:8080')
 
     def eavesdropping_info(self):
         self.info = QMessageBox()
@@ -151,7 +157,10 @@ class MainWidget(QWidget):
         self.info.exec()
 
     def launch_eavesdropping(self):
-        pass
+        if self.encryptFlag.checkState():
+            print("Encrypt")
+        else:
+            print("No encrypt")
 
     def steganography_info(self):
         self.info = QMessageBox()
@@ -169,11 +178,20 @@ class MainWidget(QWidget):
         self.info.exec()
 
     def launch_steganoggraphy_encode(self):
-        os.system(os.path.join(sys.path[0], "steganography", "encodeGUI.py"))
+        self.encodeThread = Thread(os.path.join(sys.path[0], "steganography", "encodeGUI.py"))
+        self.encodeThread.start()
     def launch_steganoggraphy_decode(self):
-        os.system(os.path.join(sys.path[0], "steganography", "decodeGUI.py"))
+        self.decodeThread = Thread(os.path.join(sys.path[0], "steganography", "decodeGUI.py"))
+        self.decodeThread.start()
         
-
+class Thread(QThread):
+    ''' Thread object to handle running demos '''
+    def __init__(self, path):
+        QThread.__init__(self)
+        self.path = path
+        
+    def run(self):
+        os.system(self.path)
 
 def main():
     # Create application

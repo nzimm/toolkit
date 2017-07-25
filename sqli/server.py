@@ -11,12 +11,12 @@ DB_NAME = "database.db"
 class InjectionDemo(object):
     @cherrypy.expose
     def index(self):
-        return open('index.html')
+        return open(os.path.join(sys.path[0], 'public', 'html', 'index.html'))
 
     @cherrypy.expose
     def shutdown(self):
         cherrypy.engine.exit()
-        return open("shutdown.html")
+        return open(os.path.join(sys.path[0], 'public', 'html', 'shutdown.html'))
 
 @cherrypy.expose
 class DatabaseHandler(object):
