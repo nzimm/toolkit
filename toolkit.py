@@ -107,6 +107,8 @@ class MainWidget(QWidget):
     
     def sqli_info(self):
         self.info = QMessageBox()
+        self.info.setText("SQL injection is a classic example of an injection vulnerability. It manifests "
+                          "when a user-driven SQL query is written improperly. ")
         self.info.exec()
     def launchSQLi(self):
         pass
