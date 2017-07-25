@@ -3,6 +3,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import sys, os
+import time
+import webbrowser
 
 class App(QApplication):
     # Main application
@@ -60,9 +62,10 @@ class MainWidget(QWidget):
     def __init__(self):
         QWidget.__init__(self)
 
-        # Create main layout and launch buttons
+        # Main layout
         self.mainLayout = QVBoxLayout(self)
 
+        # SQL injection layout/buttons
         self.sqli_layout = QHBoxLayout()
         self.sqli_label = QLabel("SQL Injection")
         self.sqli_info_button = QPushButton("Info")
@@ -72,6 +75,7 @@ class MainWidget(QWidget):
         self.sqli_layout.addWidget(self.sqli_info_button)
         self.sqli_layout.addWidget(self.sqli_button)
 
+        # Eavesdropping layout/buttons
         self.eavesdropping_layout = QHBoxLayout()
         self.eavesdropping_label = QLabel("Eavesdropping")
         self.eavesdropping_info_button = QPushButton("Info")
@@ -81,6 +85,7 @@ class MainWidget(QWidget):
         self.eavesdropping_layout.addWidget(self.eavesdropping_info_button)
         self.eavesdropping_layout.addWidget(self.eavesdropping_button)
 
+        # Steganography layout/buttons
         self.steganography_layout = QHBoxLayout()
         self.steganography_label = QLabel("Steganography")
         self.steganography_info_button = QPushButton("Info")
@@ -93,33 +98,76 @@ class MainWidget(QWidget):
         self.steganography_layout.addWidget(self.steganography_encode_button)
         self.steganography_layout.addWidget(self.steganography_decode_button)
 
-        # Create close button
+        # Create close button and horizontal separators
         self.close_button = QPushButton("Close")
+        self.horizontal_line1 = QFrame()
+        self.horizontal_line1.setFrameStyle(QFrame.HLine)
+        self.horizontal_line1.setFrameShadow(QFrame.Sunken)
+        self.horizontal_line2 = QFrame()
+        self.horizontal_line2.setFrameStyle(QFrame.HLine)
+        self.horizontal_line2.setFrameShadow(QFrame.Sunken)
+        self.horizontal_line3 = QFrame()
+        self.horizontal_line3.setFrameStyle(QFrame.HLine)
+        self.horizontal_line3.setFrameShadow(QFrame.Sunken)
 
-        # Add button to bottom of page
+        # Compile main layout
         self.mainLayout.addWidget(self.sqli_label)
         self.mainLayout.addLayout(self.sqli_layout)
+        self.mainLayout.addWidget(self.horizontal_line1)
         self.mainLayout.addWidget(self.eavesdropping_label)
         self.mainLayout.addLayout(self.eavesdropping_layout)
+        self.mainLayout.addWidget(self.horizontal_line2)
         self.mainLayout.addWidget(self.steganography_label)
         self.mainLayout.addLayout(self.steganography_layout)
-        self.mainLayout.addWidget(self.close_button)#, alignment=Qt.AlignBottom)
+        self.mainLayout.addWidget(self.horizontal_line3)
+        self.mainLayout.addWidget(self.close_button)
     
     def sqli_info(self):
         self.info = QMessageBox()
+        self.info.setWindowTitle("SQL injection introduction")
         self.info.setText("SQL injection is a classic example of an injection vulnerability. It manifests "
-                          "when a user-driven SQL query is written improperly. ")
+                          "when a SQL query is handled incorrectly. The most common occurance of this is "
+                          "when a programmer concatenates a query with user-controlled input. This gives "
+                          "the user full control of the sql query. This issue can be resolved by using SQL "
+                          "parameters. User input is then read in as a single field, rather than a string of "
+                          "code.\n\nExample query:\n \"SELECT username FROM users WHERE firstname=\" + get_user_info + \";"
+                          "\nIf the user entered a string similar to `john OR 1=1;` the WHERE clause would evaluate to "
+                          "true, and the query would SELECT every username.")
         self.info.exec()
     def launchSQLi(self):
-        pass
+        os.system(os.path.join(sys.path[0], "sqli", "server.py"))
+        time.sleep(2)
+        webbrowser.open_new('localhost:8080')
 
     def eavesdropping_info(self):
-        pass
+        self.info = QMessageBox()
+        self.info.setWindowTitle("Packet sniffing introduction")
+        self.info.setText("Eavesdropping, in the context of computers and networks, typically refers to tapping "
+                          "a communication channel, and collecting the data as if flows. This demonstration shows "
+                          "how an attacker can eavesdrop on network traffic, and read data as if is transfered "
+                          "through the network. Additionally, the user may encrypt their traffic, and the plaintext "
+                          "data becomes garbeled bits.\n\nWhile all packets are passed through the internal loopback, "
+                          "the implementation is nearly identical to tapping any TCP connection on the internet.")
+        self.info.exec()
+
     def launch_eavesdropping(self):
         pass
 
     def steganography_info(self):
-        pass
+        self.info = QMessageBox()
+        self.info.setWindowTitle("Steganography introduction")
+        self.info.setText("Steganography is the practice of hiding data 'in plain sight'. Different from "
+                          "encryption, steganography conceals data inside other files. For instance, someone "
+                          "might hide a message as the first letter of each line in a blog post. The algorithm "
+                          "used in the demonstration is refered to as the Least Significant Bit algorithm, "
+                          "wherein one bit of the message is encoded in the LSB of each color of a pixel in "
+                          "an image. For someone to decode the message, they must have knowledge of the algorithm "
+                          "with which it was encoded.\n\nThe encoding program gives the user a preview of the "
+                          "image with the message encoded, so they may visually inspect the image for any givaways "
+                          "that there is data encoded. A 1-bit change in a color is nearly indistinguishable to the "
+                          "human eye, which is why this technique is so powerful.")
+        self.info.exec()
+
     def launch_steganoggraphy_encode(self):
         os.system(os.path.join(sys.path[0], "steganography", "encodeGUI.py"))
     def launch_steganoggraphy_decode(self):

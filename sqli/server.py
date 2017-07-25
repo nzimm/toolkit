@@ -4,6 +4,7 @@ import random
 import sqlite3
 import time
 import cherrypy
+import re
 
 DB_NAME = "database.db"
 
@@ -12,13 +13,18 @@ class InjectionDemo(object):
     def index(self):
         return open('index.html')
 
+    @cherrypy.expose
+    def shutdown(self):
+        cherrypy.engine.exit()
+        return open("shutdown.html")
+
 @cherrypy.expose
 class DatabaseHandler(object):
     @cherrypy.tools.accept(media='text/plain')
     def GET(self, selectTerm):
 
         # NOTE: Constructing SQL querys with string concatenation allows for injection!
-        queryString = "SELECT username FROM users WHERE firstname='{}';".format(selectTerm.lower())
+        queryString = "SELECT username FROM users WHERE firstname='{}'".format(selectTerm.lower())
 
         # Connect to database
         with sqlite3.connect(DB_NAME) as connection:
@@ -27,7 +33,6 @@ class DatabaseHandler(object):
 
             # Separate into multiple commands
             for query in queryString.split(';'):
-
                 try:
                     # Attempt to execute sqlite3 query
                     responce = connection.execute(query)
@@ -46,12 +51,10 @@ class DatabaseHandler(object):
                 # Handle improper query strings
                 except sqlite3.OperationalError as err:
                     print(err)
-                    return "Input error"
+                    return "Input error: {}".format(query)
 
-            # Report unfound results to user
-            if display_string.replace("<table>","").replace("</table>","") == "":
-                return "No results found"
-
+            # Report empty results
+            display_string = re.sub("<table></table>","No results found", display_string)
             return display_string
 
 

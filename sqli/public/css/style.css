@@ -42,13 +42,18 @@ code {
 }
 #left {
     margin-left: 1%;
-    width: 45%;
-    height 100%;
+    width: 35%;
+    height: 100%;
     float: left;
 }
 #right {
-    width: 50%;
-    height 100%;
+    width: 40%;
+    height: 100%;
+    float: left;
+}
+#shutdown_div {
+    width: 9%;
+    height: 100%;
     float: left;
 }
 #results_container {

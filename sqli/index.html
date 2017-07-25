@@ -35,6 +35,10 @@
           evnt.preventDefualt();
         });
 
+        $("#shutdown").click(function(evnt){
+          window.close();
+        });
+
       });
     </script>
   </head>
@@ -61,10 +65,13 @@
             Compare the output of a regular input like <code>John</code> with the output of a
             SQL injected command like <code>' OR 1='1</code>.<br><br>
             <span style="font-weight: bold;">Hint:</span> More advanced SQL injection commands
-            may use comments, which can be written as <code>--</code>.<br>
+            may use comments, which can be written as <code>--</code> or <code>/*</code>.<br>
           </p>
           <button id="hide_help_button">Hide help</button>
         </div>
+      </div>
+      <div id="shutdown_div">
+        <a id="shutdown" href="./shutdown">Shutdown Server</a>
       </div>
     </div>
   </body>
