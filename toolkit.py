@@ -157,6 +157,8 @@ class MainWidget(QWidget):
         self.info.exec()
 
     def launch_eavesdropping(self):
+        # TODO find a way to run client, server, and sniffer in qt so that the stdout
+        #      prints on a widget, and the input to qt goes to the process
         if self.encryptFlag.checkState():
             print("Encrypt")
         else:
