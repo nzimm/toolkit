@@ -135,8 +135,8 @@ class MainWidget(QWidget):
                           "the user full control of the sql query. This issue can be resolved by using SQL "
                           "parameters. User input is then read in as a single field, rather than a string of "
                           "code.\n\nExample query:\n\"SELECT username FROM users WHERE firstname=\" + get_user_info + \";"
-                          "\nIf the user entered a string similar to `john OR 1=1;` the WHERE clause would evaluate to "
-                          "true, and the query would SELECT every username.")
+                          "\nIf the user entered `john OR 1=1;` the WHERE clause would evaluate to true, and the"
+                          "query would SELECT every username.")
         self.info.exec()
 
     def launchSQLi(self):
@@ -163,6 +163,8 @@ class MainWidget(QWidget):
             print("Encrypt")
         else:
             print("No encrypt")
+        self.eavesdroppingThread = Thread(os.path.join(sys.path[0], "eavesdropping", "guiDemo.py"))
+        self.eavesdroppingThread.start()
 
     def steganography_info(self):
         self.info = QMessageBox()
