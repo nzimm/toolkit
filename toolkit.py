@@ -49,6 +49,23 @@ class MainWindow(QMainWindow):
         # Add Close button functionality
         self.mainWidget.close_button.clicked.connect(self.close)
 
+        # Add file menu with exit action
+        self.fileMenu = QMenu("File")
+        self.exit = QAction("Exit", self)
+
+        # Set exit icon
+        self.exit.setIcon(QIcon(os.path.join(sys.path[0], "icons", "exit.png")))
+        self.exit.triggered.connect(self.close)
+        self.fileMenu.addAction(self.exit)
+
+        # Add file menu to menu bar
+        self.menuBar().addMenu(self.fileMenu)
+
+        # Add exit to tool bar
+        self.toolBar = QToolBar()
+        self.toolBar.addAction(self.exit)
+        self.addToolBar(self.toolBar)
+
     def closeEvent(self, event):
         # Override the default close event actions. This even runs
         # whenever the application closes.
