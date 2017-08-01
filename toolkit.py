@@ -51,20 +51,33 @@ class MainWindow(QMainWindow):
 
         # Add file menu with exit action
         self.fileMenu = QMenu("File")
+        self.toolBar = QToolBar()
         self.exit = QAction("Exit", self)
+        self.fileMenu.addAction(self.exit)
+        
+        # Set up other toolbar icons
+        self.sqliDemo = QAction("SQLi", self)
+        self.steganographyDemo = QAction("Steganography", self)
+        self.eavesdroppingDemo = QAction("Eavesdropping", self)
 
-        # Set exit icon
+        # Set toolbar icons
+        self.sqliDemo.setIcon(QIcon(os.path.join(sys.path[0], "icons", "database.png")))
+        self.sqliDemo.triggered.connect(self.mainWidget.launchSQLi)
+        self.toolBar.addAction(self.sqliDemo)
+        self.eavesdroppingDemo.setIcon(QIcon(os.path.join(sys.path[0], "icons", "eavesdropping.png")))
+        self.eavesdroppingDemo.triggered.connect(self.mainWidget.launch_eavesdropping)
+        self.toolBar.addAction(self.eavesdroppingDemo)
+        self.steganographyDemo.setIcon(QIcon(os.path.join(sys.path[0], "icons", "steganography.png")))
+        self.steganographyDemo.triggered.connect(self.mainWidget.launch_steganoggraphy_encode)
+        self.toolBar.addAction(self.steganographyDemo)
         self.exit.setIcon(QIcon(os.path.join(sys.path[0], "icons", "exit.png")))
         self.exit.triggered.connect(self.close)
-        self.fileMenu.addAction(self.exit)
-
-        # Add file menu to menu bar
-        self.menuBar().addMenu(self.fileMenu)
-
-        # Add exit to tool bar
-        self.toolBar = QToolBar()
         self.toolBar.addAction(self.exit)
+
+        # Add file menu and toolbar to menu bar
+        self.menuBar().addMenu(self.fileMenu)
         self.addToolBar(self.toolBar)
+
 
     def closeEvent(self, event):
         # Override the default close event actions. This even runs
@@ -95,9 +108,7 @@ class MainWidget(QWidget):
         # Eavesdropping layout/buttons
         self.eavesdropping_header_layout = QHBoxLayout()
         self.eavesdropping_label = QLabel("Eavesdropping")
-        self.encryptFlag = QCheckBox("Encrypt")
         self.eavesdropping_header_layout.addWidget(self.eavesdropping_label)
-        self.eavesdropping_header_layout.addWidget(self.encryptFlag)
         self.eavesdropping_layout = QHBoxLayout()
         self.eavesdropping_info_button = QPushButton("Info")
         self.eavesdropping_info_button.clicked.connect(self.eavesdropping_info)
@@ -176,12 +187,19 @@ class MainWidget(QWidget):
     def launch_eavesdropping(self):
         # TODO find a way to run client, server, and sniffer in qt so that the stdout
         #      prints on a widget, and the input to qt goes to the process
-        if self.encryptFlag.checkState():
-            print("Encrypt")
-        else:
-            print("No encrypt")
-        self.eavesdroppingThread = Thread(os.path.join(sys.path[0], "eavesdropping", "guiDemo.py"))
-        self.eavesdroppingThread.start()
+        #self.eavesdroppingThread = Thread(os.path.join(sys.path[0], "eavesdropping", "guiDemo.py"))
+        #self.eavesdroppingThread.start()
+        self.eavesdroppingDemo = QMessageBox()
+        self.eavesdroppingDemo.setWindowTitle("Eavesdropping demo instructions")
+        self.eavesdroppingDemo.setText("This demonstration requires command line execution. Carefully follow the "
+                                       "instructions below:\n\n  1. Open three terminal windows\n  2. cd into "
+                                       "the eavesdropping directory on all three terminals\n  3. In one terminal, run "
+                                       "server.py\n  4. In a second terminal, run client.py\n  5. In the third terminal, "
+                                       "run sniffer.py\n  6. Follow the prompts in sniffer.py and send messages to the "
+                                       "server from the client\n  7. (Optional) In step 4, run './client -e' to encrypt "
+                                       "the messages between the client and server, and observe the sniffer window.")
+        self.eavesdroppingDemo.exec()
+
 
     def steganography_info(self):
         self.info = QMessageBox()

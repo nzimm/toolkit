@@ -24,7 +24,7 @@ class DatabaseHandler(object):
     def GET(self, selectTerm):
 
         # NOTE: Constructing SQL querys with string concatenation allows for injection!
-        queryString = "SELECT username FROM users WHERE firstname='{}'".format(selectTerm.lower())
+        queryString = "SELECT username FROM users WHERE firstname='{}'".format(selectTerm)
 
         # Connect to database
         with sqlite3.connect(DB_NAME) as connection:
@@ -64,6 +64,7 @@ def setup_database():
     '''
     with sqlite3.connect(DB_NAME) as connection:
         connection.execute("CREATE TABLE users (username, firstname, lastname, password)")
+        connection.execute("INSERT INTO users VALUES ('admin', 'admin', '', 'Dt,pwN,Z<--%uN$F')")
         connection.execute("INSERT INTO users VALUES ('dama2741', 'david', 'madison', 'monkey123')")
         connection.execute("INSERT INTO users VALUES ('agnwl390', 'allen', 'mackinzie', 'password1234')")
         connection.execute("INSERT INTO users VALUES ('stwe5528', 'steven', 'west', 'password!')")
