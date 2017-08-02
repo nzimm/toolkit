@@ -7,7 +7,7 @@ def sniff(time):
     """ Call tshark (CLI for Wireshark) to sniff packets on loopback """
     #TODO replase [SNIFFED DATA] with [CLIENT->SERVER] or visa versa (handshake)
 
-    print("\nInitiating Wireshark")
+    print("\nWireshark initialized...\nPacket data will be displayed in {} seconds".format(time))
     result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',
                              '-q', '-a', 'duration:'+time], stdout=subprocess.PIPE)
     for data in result.stdout.decode().split('\n'):

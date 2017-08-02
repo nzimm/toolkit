@@ -108,7 +108,9 @@ class MainWidget(QWidget):
         # Eavesdropping layout/buttons
         self.eavesdropping_header_layout = QHBoxLayout()
         self.eavesdropping_label = QLabel("Eavesdropping")
+        #self.encrypted = QCheckBox("Encrypt")
         self.eavesdropping_header_layout.addWidget(self.eavesdropping_label)
+        #self.eavesdropping_header_layout.addWidget(self.encrypted)
         self.eavesdropping_layout = QHBoxLayout()
         self.eavesdropping_info_button = QPushButton("Info")
         self.eavesdropping_info_button.clicked.connect(self.eavesdropping_info)
@@ -185,20 +187,22 @@ class MainWidget(QWidget):
         self.info.exec()
 
     def launch_eavesdropping(self):
-        # TODO find a way to run client, server, and sniffer in qt so that the stdout
-        #      prints on a widget, and the input to qt goes to the process
-        #self.eavesdroppingThread = Thread(os.path.join(sys.path[0], "eavesdropping", "guiDemo.py"))
-        #self.eavesdroppingThread.start()
-        self.eavesdroppingDemo = QMessageBox()
-        self.eavesdroppingDemo.setWindowTitle("Eavesdropping demo instructions")
-        self.eavesdroppingDemo.setText("This demonstration requires command line execution. Carefully follow the "
-                                       "instructions below:\n\n  1. Open three terminal windows\n  2. cd into "
-                                       "the eavesdropping directory on all three terminals\n  3. In one terminal, run "
-                                       "server.py\n  4. In a second terminal, run client.py\n  5. In the third terminal, "
-                                       "run sniffer.py\n  6. Follow prompts in sniffer.py\n  7. (Optional) In step 4, "
-                                       "run './client -e' to encrypt the messages between the client and server, which is "
-                                       "observe the sniffer window.")
-        self.eavesdroppingDemo.exec()
+        if os.path.exists(os.path.join('/usr', 'bin', 'terminator')):
+            self.snifferThread = Thread(os.path.join('/usr', 'bin', 'terminator') + ' --working-directory=' +
+                                        os.path.join(sys.path[0], 'eavesdropping') + ' -e ./sniffer.py ')
+            self.snifferThread.start()
+
+        else:
+            self.eavesdroppingDemo = QMessageBox()
+            self.eavesdroppingDemo.setWindowTitle("Eavesdropping demo instructions")
+            self.eavesdroppingDemo.setText("This demonstration requires command line execution. Carefully follow the "
+                                           "instructions below:\n\n  1. Open three terminal windows\n  2. cd into "
+                                           "the eavesdropping directory on all three terminals\n  3. In one terminal, run "
+                                           "server.py\n  4. In a second terminal, run client.py\n  5. In the third terminal, "
+                                           "run sniffer.py\n  6. Follow prompts in sniffer.py\n  7. (Optional) In step 4, "
+                                           "run './client -e' to encrypt the messages between the client and server, which is "
+                                           "observe the sniffer window.")
+            self.eavesdroppingDemo.exec()
 
 
     def steganography_info(self):
