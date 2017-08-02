@@ -26,12 +26,14 @@
         });
 
         $("#show_help_button").click(function(evnt){
-          $("#help_contents").show();
-          evnt.preventDefualt();
-        });
-        
-        $("#hide_help_button").click(function(evnt){
-          $("#help_contents").hide();
+          if ($("#show_help_button").text() == "Show help") {
+            $("#show_help_button").text("Hide help");
+            $("#help_contents").show();
+          }
+          else {
+            $("#show_help_button").text("Show help");
+            $("#help_contents").hide();
+          }
           evnt.preventDefualt();
         });
 
@@ -46,7 +48,7 @@
     <h1>Username lookup</h1>
     <div id="container">
       <div id="left">
-        Username lookup by first name (try john)<br>
+        Username lookup - try 'john' (or injecting SQL...)<br>
         <input type="text" name="query" id="query">
         <button id="search">Search</button>
         <div id="results_container">
@@ -59,7 +61,7 @@
         <button id="show_help_button">Show help</button>
         <div id="help_contents">
           <p id="help_text">
-            If you do not understand SQL injection, feel free to conduct additional
+            If you need a refresher on SQL injection, feel free to conduct additional
             <a href="https://en.wikipedia.org/wiki/SQL_injection">research</a>.<br><br>
             SQL query: <code>"SELECT username FROM users WHERE firstname='" + SearchInput + "';"</code><br>
             Compare the output of a regular input like <code>John</code> with the output of a
@@ -67,7 +69,6 @@
             <span style="font-weight: bold;">Hint:</span> More involved SQL injection commands
             may use comments, which can be written as <code>--</code> or <code>/*</code>.<br>
           </p>
-          <button id="hide_help_button">Hide help</button>
         </div>
       </div>
       <div id="shutdown_div">
