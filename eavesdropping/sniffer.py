@@ -23,10 +23,10 @@ def sniff(time):
 #            if clean_data != '':
 #                print("[SNIFFED DATA] {}".format(clean_data))
 
-def menu():
+def menu(time):
     """ Print menu option """
     print("\n===== Packet Sniffer =====")
-    print("[1] Begin capturing packet data (15 seconds)")
+    print("[1] Begin capturing packet data ({} seconds)".format(time))
     print("[2] Specify capture length")
     print("[3] Display sniffer information")
     print("[4] Quit")
@@ -34,13 +34,14 @@ def menu():
 
 def main():
     # Main menue loop
+    sniffTime = '15'
     while True:
-        menu()
-        user_input = input().lower()
+        menu(sniffTime)
+        user_input = input("\n\nPlease input choice (1-4): ").lower()
 
         # Sniff for 15 seconds
         if user_input == "1":
-            sniff("15")
+            sniff(sniffTime)
 
         # Poll user for time
         elif user_input == "2":
@@ -51,7 +52,7 @@ def main():
                         pass
                 except ValueError as err:
                     print("{}: Please enter a valid number".format(err))
-                sniff(time)
+                sniffTime = time
                 break
              
         # Print help message
