@@ -163,7 +163,7 @@ class MainWidget(QWidget):
                           "the user full control of the sql query. This issue can be resolved by using SQL "
                           "parameters. User input is then read in as a single field, rather than a string of "
                           "code.\n\nExample query:\n\"SELECT username FROM users WHERE firstname=\" + get_user_info + \";"
-                          "\nIf the user entered `john OR 1=1;` the WHERE clause would evaluate to true, and the"
+                          "\nIf the user entered `john OR 1=1;` the WHERE clause would evaluate to true, and the "
                           "query would SELECT every username.")
         self.info.exec()
 
@@ -179,7 +179,7 @@ class MainWidget(QWidget):
         self.info.setText("Eavesdropping, in the context of computers and networks, typically refers to tapping "
                           "a communication channel, and collecting the data as if flows. This demonstration shows "
                           "how an attacker can eavesdrop on network traffic, and read data as if is transfered "
-                          "through the network. Additionally, the user may encrypt their traffic, and the plaintext "
+                          "through the network. Additionally, the user may encrypt their traffic, and the plain text "
                           "data becomes garbeled bits.\n\nWhile all packets are passed through the internal loopback, "
                           "the implementation is nearly identical to tapping any TCP connection on the internet.")
         self.info.exec()
