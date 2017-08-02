@@ -52,7 +52,7 @@ def start_client(targetHost, targetPort, encrypt):
         else:
             # Unencrypted handshake
             client.send(bytes("UCRYPT", 'utf-8'))
-            if client.recv(4).decode('utf-8') == "UACC":
+            if client.recv(4).decode('utf-8') == "ACC":
                 print("[*] Handshake successful!")
             else:
                 print("[*] Handshake failed!\nConnection terminated")

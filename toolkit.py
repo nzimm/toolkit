@@ -38,7 +38,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Toolkit Launcher")
 
         # Set the size of the main window
-        self.resize(240, 200)
+        self.resize(360, 200)
 
         # Create a main widget object (the central widget)
         self.mainWidget = MainWidget()
@@ -195,9 +195,9 @@ class MainWidget(QWidget):
                                        "instructions below:\n\n  1. Open three terminal windows\n  2. cd into "
                                        "the eavesdropping directory on all three terminals\n  3. In one terminal, run "
                                        "server.py\n  4. In a second terminal, run client.py\n  5. In the third terminal, "
-                                       "run sniffer.py\n  6. Follow the prompts in sniffer.py and send messages to the "
-                                       "server from the client\n  7. (Optional) In step 4, run './client -e' to encrypt "
-                                       "the messages between the client and server, and observe the sniffer window.")
+                                       "run sniffer.py\n  6. Follow prompts in sniffer.py\n  7. (Optional) In step 4, "
+                                       "run './client -e' to encrypt the messages between the client and server, which is "
+                                       "observe the sniffer window.")
         self.eavesdroppingDemo.exec()
 
 

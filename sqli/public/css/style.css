@@ -33,6 +33,7 @@ table, th, td {
     border: 1px solid black;
 }
 code {
+    font-size: 150%;
     background: dimGrey;
     color: white;
 }

@@ -42,11 +42,12 @@ def start_server(bind_ip, bind_port):
         handshake = connection.recv(8).decode('utf-8')
         encrypted = False
         if handshake == "UCRYPT":
-            connection.send(bytes("UACC", 'utf-8'))
+            connection.send(bytes("ACC", 'utf-8'))
             print("[*] Handshake succsesful!\n")
         elif handshake == "CRYPT":
             #TODO write encryption handshake
             connection.send(bytes("ACC", 'utf-8'))
+            print("[*] Handshake succsesful!\n")
             encrypted = True
             decryption_key = "Test Key"
         else:
