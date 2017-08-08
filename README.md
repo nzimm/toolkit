@@ -1,14 +1,14 @@
-# Toolkit is a small collection of security-oriented apps
+# Small collection of sercurity-related demos
 
-### Dependencies
+## Dependencies
 - Python3
 - PyQt5
 
-### Included
+## Demos
 - SQL injection
 - Steganography
 - Eavesdropping
 
-### Running the demo
+## Quickstart
 The demos can be run individually, but the main launcher *toolkit.py* contains
 additional information on each demo 
