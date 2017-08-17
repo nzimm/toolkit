@@ -13,6 +13,10 @@ can inject arbitrary SQL instructions to a database. [Bobby Tables](https://www.
 is the go-to example for this exploit.
 
 ### Eavesdropping
+While eavesdropping can be either active or passive, this demo uses wireshark
+to passively pick packet data out of a simple TCP chat application. The client
+can send data to the server in with or without encryption, which is illustrated
+when the wireshark wrapper *sniffer.py* displays the captured packet data.
 
 ### Steganography
 In contrast to encryption, steganography entails *concealing* data. This demo
@@ -24,7 +28,6 @@ as not to be detected at all. It is used to sneak malware onto victim's
 computers through advertisements, sometimes called *malvertisement*.
 
 
-
 ## Quickstart
-The demos can be run individually, but the main launcher *toolkit.py* contains
-additional information on each demo 
+*toolkit.py* is the main launcher, and is intended to wrap each individual demo
+into a friendly GUI.
