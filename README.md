@@ -1,6 +1,6 @@
-# Small collection of sercurity-related demos
+# Collection of security demos
 
-## Dependencies
+## Tech used
 - Python3
 - PyQt5
 
@@ -12,10 +12,9 @@ and a user's input is concatonated directly with the query string. An attacker
 can inject arbitrary SQL instructions to a database. [Bobby Tables](https://www.xkcd.com/327/)
 is the go-to example for this exploit.
 
-
 ### Steganography
-
-
+In contrast to encryption, steganography entails *concealing* data. While data
+can be concealed in many forms 
 
 ### Eavesdropping
 
