@@ -6,10 +6,11 @@
 
 ## Demos
 ### SQL injection
-Discovered around 1998, SQL injection is less common than it was in the late 2000's. The vulnerability manifests when a
-SQL query is not handled safely, and a user's input is concatonated directly with the query string. An attacker can
-inject arbitrary SQL instructions to a database. Everyone's favorite example of [SQL injection](https://www.xkcd.com/327/).
-
+Discovered around 1998, SQL injection is less common than it was in the late
+2000's. The vulnerability manifests when a SQL query is not handled safely,
+and a user's input is concatonated directly with the query string. An attacker
+can inject arbitrary SQL instructions to a database. Obligatory xkcd example
+[here](https://www.xkcd.com/327/).
 
 
 ### Steganography
