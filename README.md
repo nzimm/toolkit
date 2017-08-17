@@ -12,11 +12,16 @@ and a user's input is concatonated directly with the query string. An attacker
 can inject arbitrary SQL instructions to a database. [Bobby Tables](https://www.xkcd.com/327/)
 is the go-to example for this exploit.
 
-### Steganography
-In contrast to encryption, steganography entails *concealing* data. While data
-can be concealed in many forms 
-
 ### Eavesdropping
+
+### Steganography
+In contrast to encryption, steganography entails *concealing* data. This demo
+uses image steganography to hide an ascii message inside the pixel data of a 
+PNG file. By setting the least significant bit of each pixel to a bit of the
+message, the colors that make up the image are encoded with the message. Where
+encryption can be detected, the goal of steganography is to hide the data so
+as not to be detected at all. It is used to sneak malware onto victim's
+computers through advertisements, sometimes called *malvertisement*.
 
 
 
