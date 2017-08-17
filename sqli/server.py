@@ -38,7 +38,7 @@ class DatabaseHandler(object):
                     responce = connection.execute(query)
 
                     # Create label for result table
-                    display_string += "<span id=\"table_query\">{}</span><br><table>".format(query)
+                    display_string += "<span id=\"table_query\">{};</span><br><table>".format(query)
 
                     # Format output into HTML tables
                     for row in responce.fetchall():
@@ -51,10 +51,10 @@ class DatabaseHandler(object):
                 # Handle improper query strings
                 except sqlite3.OperationalError as err:
                     print(err)
-                    return "Input error: {}".format(query)
+                    return "{}".format(err)
 
             # Report empty results
-            display_string = re.sub("<table></table>","No results found", display_string)
+            display_string = re.sub("<table></table>","No results found<br>", display_string)
             return display_string
 
 
