@@ -6,7 +6,7 @@ import time
 import cherrypy
 import re
 
-DB_NAME = "database.db"
+DB_NAME = 'database.db'
 
 class InjectionDemo(object):
     @cherrypy.expose
