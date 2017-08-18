@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import argparse
+import time, random
 from string import printable
+from primes import findPrimes
 
 def symmetric_encrypt(message, key):
     """ Uses key values to shift the characters in message
@@ -53,6 +55,28 @@ def symmetric_decrypt(message, key):
         decrypted_message += printable[encrypted_char_index]
 
     return decrypted_message
+
+def generateSymmetricKey():
+    random.seed()
+    return int(random.random() * 10000000000000000)
+
+def generateKeyPair():
+    # TODO add functionality to main for this function
+    """ Generates a key pair for public key crypto
+        WEAK CRYPTO - FOR EDUCATIONAL PURPOSE ONLY!
+
+        Input: none
+        Output: public_key, private_key
+    """
+    random.seed()
+    prime_list = findPrimes(int(random.random() * 100000))
+    p = prime_list[-1]
+    q = prime_list[-2]
+    n = p * q
+    totient = (p - 1) * (q - 1)
+    e = 5
+    d = int((1 + totient * int(random.random() * 100)) / e)
+    return (n, e), d
         
 
 def main():
