@@ -3,14 +3,15 @@ import socket
 import argparse
 import time, random
 from crypto import symmetric_encrypt
+from primes import findPrimes
 
 
 def main():
     # Local variables
     targetHost = "127.0.0.1"
     targetPort = 9999
-    private_key = '5B9F53A97165797FAEFA445B26F'
-    public_key = 'E1D59A224333CDC964C432E1136'
+    private_key = ''
+    public_key = ''
 
     # Handle arguments
     parser = argparse.ArgumentParser()
@@ -39,7 +40,6 @@ def start_client(targetHost, targetPort, encrypt):
         print("[*] Connection with {}:{}".format(targetHost, targetPort))
     
         # Set timeout
-        # NOTE: Figure out why client doesn't timeout - while loop resets counter?
         client.settimeout(15)
 
         # Facilitate handshake
