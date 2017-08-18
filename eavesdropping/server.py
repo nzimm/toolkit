@@ -8,6 +8,9 @@ def main():
     # Default values
     bind_ip = "0.0.0.0"
     bind_port = 9999
+    private_key = '0DAF63C3A72724CB2797AC1EA0D11609'
+    public_key = '15C42A5492BBF0CE757372DF2E898ABF'
+
 
     # Parse inputs
     parser = argparse.ArgumentParser()
@@ -42,11 +45,10 @@ def start_server(bind_ip, bind_port):
         handshake = connection.recv(8).decode('utf-8')
         encrypted = False
         if handshake == "UCRYPT":
-            connection.send(bytes("ACC", 'utf-8'))
+            connection.send(bytes("ACK", 'utf-8'))
             print("[*] Handshake succsesful!\n[*] WARNING! Transmition unencrypted\n")
         elif handshake == "CRYPT":
-            #TODO write encryption handshake
-            connection.send(bytes("ACC", 'utf-8'))
+            connection.send(bytes("ACK", 'utf-8'))
             print("[*] Handshake succsesful!\n[*] Transmition encrypted!\n")
             encrypted = True
             decryption_key = "Test Key"

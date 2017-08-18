@@ -5,7 +5,6 @@ from binascii import unhexlify
     
 def sniff(time):
     """ Call tshark (CLI for Wireshark) to sniff packets on loopback """
-    #TODO replase [SNIFFED DATA] with [CLIENT->SERVER] or visa versa (handshake)
 
     print("\nWireshark initialized...\nPacket data will be displayed in {} seconds".format(time))
     result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',
@@ -14,14 +13,6 @@ def sniff(time):
         clean_data = unhexlify(data).decode()
         if clean_data != '':
             print("[SNIFFED DATA] {}".format(clean_data))
-#    result = subprocess.run(['tshark', '-i', 'lo', '-T', 'fields', '-e', 'data',
-#                             '-e', 'tcp.port', '-e', 'ip.src_addr', '-q', '-a',
-#                             'duration:'+time], stdout=subprocess.PIPE)
-#    for line in result.stdout.decode().split('\n'):
-#        for data in line.split('\t'):
-#            clean_data = unhexlify(data).decode()
-#            if clean_data != '':
-#                print("[SNIFFED DATA] {}".format(clean_data))
 
 def menu(time):
     """ Print menu option """
@@ -72,7 +63,7 @@ def main():
 
         # Handle non-standard input
         else:
-            print("{} is not a valid input. Please consult menu for options".format(user_input))
+            print("You entered '{}', which is not a valid input. Please consult menu for options".format(user_input))
             
 if __name__ == '__main__':
     main()

@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 import socket
 import argparse
+import time, random
 from crypto import symmetric_encrypt
 
 
 def main():
-    # Variables
+    # Local variables
     targetHost = "127.0.0.1"
     targetPort = 9999
+    private_key = '5B9F53A97165797FAEFA445B26F'
+    public_key = 'E1D59A224333CDC964C432E1136'
 
     # Handle arguments
     parser = argparse.ArgumentParser()
@@ -37,25 +40,28 @@ def start_client(targetHost, targetPort, encrypt):
     
         # Set timeout
         # NOTE: Figure out why client doesn't timeout - while loop resets counter?
-        client.settimeout(3)
+        client.settimeout(15)
 
         # Facilitate handshake
         if encrypt:
-            #TODO write encryption handshake
             client.send(bytes("CRYPT", 'utf-8'))
-            if client.recv(4).decode('utf-8') == "ACC":
+            if client.recv(4).decode('utf-8') == "ACK":
                 encryption_key = "Test Key"
                 print("[*] Handshake successful!\n[*] Transmition encrypted!")
             else:
                 print("[*] Handshake failed!\nConnection terminated")
+                client.send(bytes('.quit', 'utf-8'))
+                client.close()
                 exit(0)
         else:
             # Unencrypted handshake
             client.send(bytes("UCRYPT", 'utf-8'))
-            if client.recv(4).decode('utf-8') == "ACC":
+            if client.recv(4).decode('utf-8') == "ACK":
                 print("[*] Handshake successful!\n[*] WARNING! Transmition unencrypted")
             else:
                 print("[*] Handshake failed!\nConnection terminated")
+                client.send(bytes('.quit', 'utf-8'))
+                client.close()
 
     
         # On succsesful handshake successful
