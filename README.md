@@ -1,8 +1,9 @@
 # Collection of security demos
 
-## Tech used
+## Dependencies
 - Python3
 - PyQt5
+- CherryPy
 
 ## Demos
 ### SQL injection
